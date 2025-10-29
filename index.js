@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const { convertImageFunction } = require("./utility/imageConversionFunction");
 const app = express();
@@ -20,6 +22,7 @@ app.get("/api/convert/image", async (req, res) => {
   res.json({
     status: 200,
     message: `Image Converted to ${targetFormat} Sucessfully!`,
+    convertedImageUrl: respo,
   });
 });
 
