@@ -28,10 +28,18 @@ async function convertImageFunction(imageUrl, targetFormat) {
     });
 
     const uploadResult = await uploadPromise;
-    return uploadResult.secure_url;
+    return {
+      message: `Image conversion to ${targetFormat} Successful!`,
+      downloadUrl: uploadResult.secure_url,
+      status: 200,
+    };
   } catch (error) {
     console.error("Error during image conversion or upload:", error);
-    throw error;
+    return {
+      message: `Image conversion to ${targetFormat} or upload failed!`,
+      downloadUrl: null,
+      status: 500,
+    };
   }
 }
 module.exports = { convertImageFunction };

@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({ status: "ok", message: "ConvertZee API" });
+  res.json({ status: "ok", message: "Welcome to ConvertZee API Server!" });
 });
 
 app.get("/health", (req, res) => {
@@ -20,9 +20,9 @@ app.get("/api/convert/image", async (req, res) => {
   const respo = await convertImageFunction(imageUrl, targetFormat);
 
   res.json({
-    status: 200,
-    message: `Image Converted to ${targetFormat} Sucessfully!`,
-    convertedImageUrl: respo,
+    status: respo.status,
+    message: respo.message,
+    convertedImageUrl: respo.downloadUrl,
   });
 });
 
