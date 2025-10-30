@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const { convertImageFunction } = require("./utility/imageConversionFunction");
+const { compressImageFunction } = require("./utility/imageCompressionFunction");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -23,6 +24,17 @@ app.get("/api/convert/image", async (req, res) => {
     status: respo.status,
     message: respo.message,
     convertedImageUrl: respo.downloadUrl,
+  });
+});
+
+app.get("/api/compress/image", async (req, res) => {
+  const { imageUrl, options } = req.body;
+  const respo = await compressImageFunction(imageUrl, options);
+
+  res.json({
+    message: respo.message,
+    compressedImageUrl: respo.optimizedUrl,
+    compressionRatio: respo.compressionRatio,
   });
 });
 
