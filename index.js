@@ -1,12 +1,18 @@
 require("dotenv").config();
 
 const express = require("express");
+const cors = require("cors")
 const { convertImageFunction } = require("./utility/imageConversionFunction");
 const { compressImageFunction } = require("./utility/imageCompressionFunction");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"],
+}));
 
 app.get("/", (req, res) => {
   res.json({ status: "ok", message: "Welcome to ConvertZee API Server!" });
@@ -16,7 +22,7 @@ app.get("/health", (req, res) => {
   res.json({ status: 200, message: "Health check passed" });
 });
 
-app.get("/api/convert/image", async (req, res) => {
+app.post("/api/convert/image", async (req, res) => {
   const { imageUrl, targetFormat } = req.body;
   const respo = await convertImageFunction(imageUrl, targetFormat);
 
