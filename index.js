@@ -33,7 +33,7 @@ app.post("/api/convert/image", async (req, res) => {
   });
 });
 
-app.get("/api/compress/image", async (req, res) => {
+app.post("/api/compress/image", async (req, res) => {
   const { imageUrl, options } = req.body;
   const respo = await compressImageFunction(imageUrl, options);
 
